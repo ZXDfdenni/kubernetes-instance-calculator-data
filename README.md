@@ -48,6 +48,29 @@ Container based application for K8S Calculator
   make remove
   ```
 
+## Without Container
+
+- Go to `src` folder
+  ```
+  cd src
+  ```
+- Install package libraries
+  ```
+  npm install
+  -- or --
+  yarn install
+  ```
+- Running All
+  ```
+  npm run all
+  ```
+- Running Spesific Cloud
+  ```
+  npm run aws
+  npm run azure
+  npm run gcp
+  ```
+
 ## Running Port
 
 - Non HTTPS (80) -> 5050
