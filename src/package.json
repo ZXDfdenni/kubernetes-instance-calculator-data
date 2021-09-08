@@ -1,0 +1,32 @@
+{
+  "name": "k8s-calculator",
+  "version": "1.0.0",
+  "description": "Infrastructure Calculator for K8S",
+  "main": "run.js",
+  "scripts": {
+    "all": "node ./run.js all",
+    "aws": "node ./run.js aws",
+    "azure": "node ./run.js azure",
+    "gcp": "node ./gcp.js gcp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZXDfdenni/kubernetes-instance-calculator-data.git"
+  },
+  "keywords": [
+    "infra",
+    "calculator",
+    "k8s",
+    "kubernetes"
+  ],
+  "author": "Learnk8s",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZXDfdenni/kubernetes-instance-calculator-data/issues"
+  },
+  "homepage": "https://github.com/ZXDfdenni/kubernetes-instance-calculator-data#readme",
+  "dependencies": {
+    "aws-sdk": "^2.958.0",
+    "node-cmd": "^5.0.0"
+  }
+}
