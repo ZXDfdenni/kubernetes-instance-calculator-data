@@ -1,0 +1,79 @@
+version: '3.6'
+
+#================================================================================================
+# NETWORK SETUP
+#================================================================================================
+networks:
+  webapp_net:
+    name: webapp_net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.145.145.0/16
+
+#================================================================================================
+# VOLUME SETUP
+#================================================================================================
+volumes:
+  portainer:
+    driver: ${VOLUMES_DRIVER:-local}
+  webapp:
+    driver: ${VOLUMES_DRIVER:-local}
+
+services:
+#================================================================================================
+# PORTAINER
+#================================================================================================
+  portainer:
+    image: dockerframework/portainer:${PORTAINER_VERSION:-2.6}
+    container_name: ${CONTAINER_PORTAINER:-webapp_portainer}
+    restart: always
+    ports:
+      - "${PORT_PORTAINER:-5212}:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_PORTAINER:-/opt/data/docker/portainer2.6}:/data
+    environment:
+      - PORTAINER_TEMPLATE=generic
+      - PORTAINER_VERSION=${PORTAINER_VERSION:-2.6}
+    privileged: true
+    networks:
+      webapp_net:
+        ipv4_address: ${CONTAINER_IP_PORTAINER:-172.145.145.5}
+
+#================================================================================================
+# WEBAPP CLIENT
+#================================================================================================
+  webapp:
+    build:
+      context: ../
+      ## AWS
+      # dockerfile: Dockerfile.aws
+      ## GCP
+      # dockerfile: Dockerfile.gcp
+      ## Azure
+      # dockerfile: Dockerfile.azure      
+      dockerfile: Dockerfile
+    container_name: ${CONTAINER_WEBAPP:-webapp_client}
+    restart: always
+    ports:
+      - "${PORT_WEBAPP_HTTP:-5050}:80"
+      - "${PORT_WEBAPP_HTTPS:-5051}:443"
+    volumes:
+      #- /etc/localtime:/etc/localtime:ro   ## Do not use it in mac
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ="Asia/Jakarta"
+    ulimits:
+      nproc: 131072
+      nofile:
+        soft: 8192
+        hard: 131072
+      memlock:
+        soft: -1
+        hard: -1
+    privileged: true
+    tty: true
+    networks:
+      webapp_net:
+        ipv4_address: ${CONTAINER_IP_WEBAPP:-172.145.145.103}
