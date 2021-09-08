@@ -34,7 +34,7 @@ Container based application for K8S Calculator
   ```bash
   ./run-docker.sh
   -- or --
-  docker-compose -f docker-compose.yml up -d
+  docker-compose -f docker/app-compose.yml up -d
   -- or --
   make run
   ```
@@ -43,7 +43,7 @@ Container based application for K8S Calculator
 
 - Running Docker Compose
   ```bash
-  docker-compose -f docker-compose.yml down
+  docker-compose -f docker/app-compose.yml down
   -- or --
   make remove
   ```
